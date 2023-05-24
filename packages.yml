@@ -1,0 +1,3 @@
+packages:
+  - git: "https://github.com/snowplow/dbt-snowplow-utils.git"
+    revision: "feature/create-base-table"

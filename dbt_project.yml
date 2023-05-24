@@ -1,0 +1,49 @@
+
+name: 'your_project_name'
+version: '1.0.0'
+config-version: 2
+
+profile: 'default'
+
+dispatch:
+  - macro_namespace: dbt
+    search_order: ['snowplow_utils', 'dbt']
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"  # directory which will store compiled SQL files
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+
+vars:
+  your_project_name:
+    # Sources
+    snowplow__events_schema: 'atomic'
+    snowplow__events_table: 'events'
+    # Variables - Standard Config
+    snowplow__app_ids: []
+    snowplow__days_late_allowed: 3
+    snowplow__derived_tstamp_partitioned: true
+    snowplow__max_session_days: 3
+    snowplow__start_date: '2020-01-01'
+    # Variables - Advanced Config
+    snowplow__base_sessions: 'snowplow_base_sessions_this_run'
+    snowplow__event_limits: 'snowplow_base_new_event_limits'
+    snowplow__incremental_manifest: 'snowplow_incremental_manifest'
+    snowplow__quarantined_sessions: 'snowplow_base_quarantined_sessions'
+    snowplow__session_identifiers: '{"atomic": "domain_sessionid"}'
+    snowplow__session_timestamp: 'collector_tstamp'
+    snowplow__user_identifiers: '{"atomic" : "domain_userid"}'
+
+models:
+  your_project_name:
+    base:
+      +materialized: 'table'
+      +tags: 'snowplow_incremental'
