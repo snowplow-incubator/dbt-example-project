@@ -1,0 +1,66 @@
+
+name: 'custom_base_project'
+version: '1.0.0'
+config-version: 2
+
+profile: 'default'
+
+dispatch:
+  - macro_namespace: dbt
+    search_order: ['snowplow_utils', 'dbt']
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"  # directory which will store compiled SQL files
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+
+
+vars:
+  custom_base_project:
+    # Sources
+    snowplow__events_schema: 'atomic'
+    snowplow__events_table: 'events'
+    # Variables - Standard Config
+    snowplow__start_date: "2023-01-01"
+    snowplow__session_identifiers: [{"schema": "atomic", "field" : "domain_sessionid"}]
+    snowplow__session_timestamp: 'collector_tstamp'
+    snowplow__user_identifiers: [{"schema": "atomic", "field" : "domain_userid"}]
+    snowplow__quarantined_sessions: 'internal_snowplow_base_quarantined_sessions'
+    # Entities or SDEs is only for Redshift & Postgres
+    snowplow__entities_or_sdes: [{"schema" : "contexts_com_snowplowanalytics_custom_entity_1", "prefix": "custom", "single_entity": true}]
+    # The custom_sql needs to use the prefix entered above if running on Redshift & Postgres
+    snowplow__bigquery_custom_sql: |
+      contexts_com_snowplowanalytics_custom_entity_1_0_0[safe_offset(0)].contents::TEXT as custom_contents
+      , contexts_com_snowplowanalytics_custom_entity_1_0_0[safe_offset(0)].length::INT as custom_contents_length
+    snowplow__databricks_custom_sql: |
+      contexts_com_snowplowanalytics_custom_entity_1[0].contents::STRING as custom_contents
+      , contexts_com_snowplowanalytics_custom_entity_1[0].length::INT as custom_contents_length
+    snowplow__rs_pg_custom_sql: |
+      contexts_com_snowplowanalytics_custom_entity_1[0].contents::TEXT as custom_contents
+      , contexts_com_snowplowanalytics_custom_entity_1[0].length::INT as custom_contents_length
+    snowplow__snowflake_custom_sql: |
+      contexts_com_snowplowanalytics_custom_entity_1[0].contents::VARCHAR as custom_contents
+      , contexts_com_snowplowanalytics_custom_entity_1[0].length::INT as custom_contents_length
+
+    snowplow__derived_tstamp_partitioned: true
+    snowplow__days_late_allowed: 3
+    snowplow__max_session_days: 3
+    snowplow__backfill_limit_days: 30
+    snowplow__app_id: []
+    snowplow__allow_refresh: false
+    snowplow__dev_target_name: dev
+    snowplow__query_tag: 'snowplow_dbt'
+
+models:
+  custom_base_project:
+    base:
+      +materialized: 'table'
+      +tags: 'snowplow_incremental'
