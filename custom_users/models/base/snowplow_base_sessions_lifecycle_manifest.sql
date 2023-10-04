@@ -5,6 +5,21 @@ and you may not use this file except in compliance with the Snowplow Community L
 You may obtain a copy of the Snowplow Community License Version 1.0 at https://docs.snowplow.io/community-license-1.0
 #}
 
+{{
+  config(
+    materialized='incremental',
+    unique_key='session_identifier',
+    upsert_date_key='start_tstamp',
+    sort='start_tstamp',
+    dist='session_identifier',
+    partition_by = snowplow_utils.get_value_by_target_type(bigquery_val={
+      "field": "start_tstamp",
+      "data_type": "timestamp"
+    }, databricks_val='start_tstamp_date'),
+    snowplow_optimize = true
+  )
+}}
+
 
 {% set sessions_lifecycle_manifest_query = snowplow_utils.base_create_snowplow_sessions_lifecycle_manifest(
     session_identifiers=var('snowplow__session_identifiers'),

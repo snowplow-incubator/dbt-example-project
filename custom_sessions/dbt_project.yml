@@ -27,6 +27,7 @@ vars:
     # Sources
     snowplow__events_schema: 'atomic'
     snowplow__events_table: 'events'
+    snowplow__base_sessions: snowplow_base_sessions_this_run
     # Variables - Standard Config
     snowplow__start_date: "2023-01-01"
     # This is an example of session identifiers for BigQuery
