@@ -14,6 +14,7 @@ In this repository, we showcase three example dbt projects, which display the fo
 1. Custom base -- this shows how to add custom SQL to your tables, as well as how to include entities and SDEs into your tables when you have a federated table design
 2. Custom sessions -- this shows how to customize your session identifier
 3. Custom users -- this shows how to customize your user identifier
+4. Daily aggreates -- this shows you how to set the session identifier to be a the day of your event to allow to daily aggregations
 
 # Join the Snowplow community
 

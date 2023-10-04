@@ -10,7 +10,7 @@ The purpose of this project is to show how you could use Snowplow's dbt packages
 
 ## Usage
 
-In order to include custom `session_identifier` fields, we set the `snowplow__session_identifiers` to have the following value `[{"schema": "contexts_com_snowplowanalytics_session_identifier_2_0_0", "field": "session_identifier", "prefix": "si_t", "alias": "sito"}, {"schema": "contexts_com_snowplowanalytics_session_identifier_1_0_0", "field" : "session_id", "prefix" : "si_o", "alias": "sido"}]`. This essentially generates a coalesce statement, whereby the package first tries to use the `session_identifier` field from the `contexts_com_snowplowanalytics_session_identifier_2_0_0` context, and if this is null it tries to use the `session_id` field from the `contexts_com_snowplowanalytics_session_identifier_1_0_0` context.
+In order to set the `session_identifier` field to be the date of the event, we set the `snowplow__session_sql` to have the following value `DATE(e.derived_tstamp)`. This ensures that any days are fully (re)processed each time so aggregates at day level or lower will always be valid and correct.
 
 # Join the Snowplow community
 
