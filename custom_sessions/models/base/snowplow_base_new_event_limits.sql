@@ -5,6 +5,11 @@ and you may not use this file except in compliance with the Snowplow Community L
 You may obtain a copy of the Snowplow Community License Version 1.0 at https://docs.snowplow.io/community-license-1.0
 #}
 
+{{ 
+  config(
+   post_hook=["{{snowplow_utils.print_run_limits(this)}}"]
+   )
+}}
 
 {%- set models_in_run = snowplow_utils.get_enabled_snowplow_models(package_name='snowplow') -%}
 

@@ -21,7 +21,7 @@ You may obtain a copy of the Snowplow Community License Version 1.0 at https://d
 }}
 
 {% set sessions_lifecycle_manifest_query = snowplow_utils.base_create_snowplow_sessions_lifecycle_manifest(
-    session_identifiers=var('snowplow__session_identifiers'),
+    session_sql=var('snowplow__session_sql', none),
     session_timestamp=var('snowplow__session_timestamp', 'collector_tstamp'),
     user_identifiers=var('snowplow__user_identifiers'),
     quarantined_sessions=var('snowplow__quarantined_sessions', 'snowplow_base_quarantined_sessions'),
@@ -29,6 +29,7 @@ You may obtain a copy of the Snowplow Community License Version 1.0 at https://d
     days_late_allowed=var('snowplow__days_late_allowed', 3),
     max_session_days=var('snowplow__max_session_days', 3),
     app_ids=var('snowplow__app_ids', []),
+    snowplow_events_database=var('snowplow__events_database', none),
     snowplow_events_schema=var('snowplow__events_schema', 'atomic'),
     snowplow_events_table=var('snowplow__events_table', 'snowplow_events'),
     event_limits_table=var('snowplow__event_limits', 'snowplow_base_new_event_limits'),

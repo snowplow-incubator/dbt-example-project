@@ -4,17 +4,13 @@
 
 ![snowplow-logo](https://raw.githubusercontent.com/snowplow/dbt-snowplow-utils/main/assets/snowplow_logo.png)
 
-# Snowplow's dbt example project
+# Snowplow's dbt example project - daily aggregates
 
-The purpose of this project is to show how you could use Snowplow's dbt packages found in dbt's [package hub](https://hub.getdbt.com/snowplow/) in your existing dbt project. For more information please feel free to browse our [docs][docs] to get a better understanding of how our individual dbt packages work.
+The purpose of this project is to show how you could use Snowplow's dbt packages found in dbt's [package hub](https://hub.getdbt.com/snowplow/) in your existing dbt project. Specifically, this project shows how you could implement custom session identifiers and then build off of the base modules to generate aggregated metrics of daily event volume. For more information please feel free to browse our [docs][docs] to get a better understanding of how our individual dbt packages work.
 
-## Contents
+## Usage
 
-In this repository, we showcase three example dbt projects, which display the following functionality:
-1. Custom base -- this shows how to add custom SQL to your tables, as well as how to include entities and SDEs into your tables when you have a federated table design
-2. Custom sessions -- this shows how to customize your session identifier
-3. Custom users -- this shows how to customize your user identifier
-4. Daily aggreates -- this shows you how to set the session identifier to be a the day of your event to allow to daily aggregations
+In order to set the `session_identifier` field to be the date of the event, we set the `snowplow__session_sql` to have the following value `DATE(e.derived_tstamp)`. This ensures that any days are fully (re)processed each time so aggregates at day level or lower will always be valid and correct.
 
 # Join the Snowplow community
 
