@@ -4,7 +4,7 @@
 
 ![snowplow-logo](https://raw.githubusercontent.com/snowplow/dbt-snowplow-utils/main/assets/snowplow_logo.png)
 
-# Snowplow's dbt example project - custom base
+# Snowplow's dbt example project - daily aggregates
 
 The purpose of this project is to show how you could use Snowplow's dbt packages found in dbt's [package hub](https://hub.getdbt.com/snowplow/) in your existing dbt project. Specifically, this project shows how you could customise your base tables to include custom session identifiers. For more information please feel free to browse our [docs][docs] to get a better understanding of how our individual dbt packages work.
 
