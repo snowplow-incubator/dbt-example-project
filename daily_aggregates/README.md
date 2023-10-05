@@ -6,7 +6,7 @@
 
 # Snowplow's dbt example project - daily aggregates
 
-The purpose of this project is to show how you could use Snowplow's dbt packages found in dbt's [package hub](https://hub.getdbt.com/snowplow/) in your existing dbt project. Specifically, this project shows how you could customise your base tables to include custom session identifiers. For more information please feel free to browse our [docs][docs] to get a better understanding of how our individual dbt packages work.
+The purpose of this project is to show how you could use Snowplow's dbt packages found in dbt's [package hub](https://hub.getdbt.com/snowplow/) in your existing dbt project. Specifically, this project shows how you could implement custom session identifiers and then build off of the base modules to generate aggregated metrics of daily event volume. For more information please feel free to browse our [docs][docs] to get a better understanding of how our individual dbt packages work.
 
 ## Usage
 
