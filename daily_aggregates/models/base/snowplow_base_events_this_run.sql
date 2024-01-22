@@ -17,10 +17,11 @@ You may obtain a copy of the Snowplow Community License Version 1.0 at https://d
     derived_tstamp_partitioned=var('snowplow__derived_tstamp_partitioned', true),
     days_late_allowed=var('snowplow__days_late_allowed', 3),
     max_session_days=var('snowplow__max_session_days', 3),
-    app_ids=var('snowplow__app_ids', []),
+    app_ids=var('snowplow__app_id', []),
     snowplow_events_database=var('snowplow__events_database', none),
     snowplow_events_schema=var('snowplow__events_schema', 'atomic'),
     snowplow_events_table=var('snowplow__events_table', 'events'),
+    session_identifiers=[{"schema" : "atomic", "field" : "domain_sessionid"}],
     entities_or_sdes=var('snowplow__entities_or_sdes', ''),
     custom_sql=var('snowplow__custom_sql', '')) %}
 
