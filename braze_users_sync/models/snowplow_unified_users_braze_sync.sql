@@ -12,6 +12,19 @@ You may obtain a copy of the Snowplow Community License Version 1.0 at https://d
   )
 }}
 
+{# check if the snapshot exists #}
+
+{% set source_relation = adapter.get_relation(
+      database=ref('snowplow_unified_users_snapshot').database,
+      schema=ref('snowplow_unified_users_snapshot').schema,
+      identifier=ref('snowplow_unified_users_snapshot').name) %}
+
+{% if source_relation is none %}
+  {{ exceptions.warn(
+      "Snowplow Warning: the snapshot 'snowplow_unified_users_snapshot' does not exist, please create it and try again."
+    ) }}
+{% endif %}
+
 {# identify the columns to be processed #}
 
 {% if var('snowplow__braze_columns_to_include') | length == 0 %}
