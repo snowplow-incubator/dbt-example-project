@@ -1,0 +1,33 @@
+name: '<YOUR PROJECT NAME>'
+version: '1.0.0'
+config-version: 2
+
+profile: '<YOUR PROFILE NAME>'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+dispatch:
+  - macro_namespace: dbt
+    search_order: ['snowplow_utils', 'dbt']
+    
+models:
+  snowplow_unified:
+    optional_modules:
+      app_errors:
+        +enabled: false # In this example we disable the existing app_errors module coming from the snowplow_unified package, this will apply to both this run and the derived table
+  <YOUR PROJECT NAME>:
+    custom_app_errors:
+      +tags: 'snowplow_unified_incremental' # This will make sure that this derived table will be added to the snowplow_unified_incremental_manifest table and keep your newly added custom derived table in sync with the rest of the derived tables, consider doing a partial or full-refresh if the data needs to be backfilled
+
+vars:
+  snowplow_unified: # Overwrite package variable defaults for snowplow_unified package as and when needed
+    snowplow__start_date: '2024-11-01'

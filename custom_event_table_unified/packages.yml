@@ -1,0 +1,8 @@
+packages:
+  - package: snowplow/snowplow_unified 
+    version: [">=0.5.0", "<0.6.0"]
+
+# Never overwrite the snowplow_unified package directly, this should just be a reference here
+# then either disable specific models, seed files that you want to overwrite or if it is a macro customization
+# if it is a dispatch type macro, you can just add a macro with the same name as in the unified package 
+# and dbt will use that instead, for custom logic
