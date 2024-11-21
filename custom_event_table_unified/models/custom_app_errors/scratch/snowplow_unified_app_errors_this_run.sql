@@ -1,8 +1,8 @@
 {#
 Copyright (c) 2023-present Snowplow Analytics Ltd. All rights reserved.
-This program is licensed to you under the Snowplow Personal and Academic License Version 1.0,
-and you may not use this file except in compliance with the Snowplow Personal and Academic License Version 1.0.
-You may obtain a copy of the Snowplow Personal and Academic License Version 1.0 at https://docs.snowplow.io/personal-and-academic-license-1.0/
+This program is licensed to you under the Snowplow Community License Version 1.0,
+and you may not use this file except in compliance with the Snowplow Community License Version 1.0.
+You may obtain a copy of the Snowplow Community License Version 1.0 at https://docs.snowplow.io/community-license-1.0
 #}
 
 {{
@@ -10,7 +10,6 @@ You may obtain a copy of the Snowplow Personal and Academic License Version 1.0 
     sort='derived_tstamp',
     dist='event_id',
     tags=["this_run"],
-    enabled=(var("snowplow__enable_app_errors", false)),
     sql_header=snowplow_utils.set_query_tag(var('snowplow__query_tag', 'snowplow_dbt'))
   )
 }}
@@ -100,7 +99,8 @@ select
 from {{ ref('snowplow_unified_events_this_run') }} as e
 where e.event_name = 'application_error'
 
-/* you can change anything in the script but we advise you to select from the snowplow_unified_events_this_run table 
+/* you can change anything in the script, here we removed the `enabled` config as it was tied to package variable previously so that this model can run freely 
+we advise you to select from the snowplow_unified_events_this_run table 
 to access all events that are being processed as per a standard incremental run,
 it is already deduplicated ready for your selections e.g.: */
 and e.my_custom_sde.error_type= 'custom_application_error'

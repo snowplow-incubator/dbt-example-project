@@ -20,6 +20,9 @@ Finally, you can see how a custom app_errors module is constructed. In this impl
 
 Once you set your custom derived implementation locally, we encourage you to run it against your dev target with a limited data by setting the backfill_limit_days variable to 1. Then run it at least twice and see the output both for a standard run and for an incremental run, both in the target warehouse itself and within your project under the target folder, where dbt will compile you the sql that took place in a given run.
 
+We have copied selectors.yml file from the unified package directly so you can conveniently run the models from the package as well as your custom models that are tagged with `snowplow_unified_incremental` by running `dbt run --selector snowplow_unified`.
+
+
 # Join the Snowplow community
 
 We welcome all ideas, questions and contributions!
