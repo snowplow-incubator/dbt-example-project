@@ -1,0 +1,32 @@
+name: '<YOUR PROJECT NAME>'
+version: '1.0.0'
+config-version: 2
+
+profile: '<YOUR PROFILE NAME>'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+dispatch:
+  - macro_namespace: dbt
+    search_order: ['snowplow_utils', 'dbt']  # The explicit search order overwrite makes sure that the snowplow optimized upsert is taking precedence over dbt defaults
+    
+models:
+  snowplow_unified:
+    users:
+      +enabled: false # You can explicitly disable original package models that you don't need, let's say the users module in this example
+  <YOUR PROJECT NAME>:
+    custom_app_errors:
+      +tags: 'snowplow_unified_incremental' # This will make sure that your custom models will be added to the snowplow_unified_incremental_manifest table and keep your newly added custom derived table in sync with the rest of the derived tables, consider doing a partial or full-refresh if the data needs to be backfilled
+
+vars:
+  snowplow_unified: # Overwrite package variable defaults for snowplow_unified package as and when needed
+    snowplow__start_date: '2024-11-01'
